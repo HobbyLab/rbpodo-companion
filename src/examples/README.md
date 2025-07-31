@@ -11,4 +11,13 @@ Highlights the difference in motion smoothness and responsiveness.
 
 ```bash
 python joint_trajectory_test.py
+```
+
+### `record_joint_data.py`
+Provides an interactive CLI tool to manually record joint angles and TCP positions.  
+Each time you press `[Enter]`, the current state is saved.  
+Press `q` or `Ctrl+C` to stop and export the collected data to a `.json` file.
+
+```bash
+python record_joint_data.py
 ````

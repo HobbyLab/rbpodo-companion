@@ -8,3 +8,5 @@
 __pycache__/
 CMakeFiles
 CMakeCache.txt
+
+joint_capture
