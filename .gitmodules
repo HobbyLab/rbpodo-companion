@@ -1,0 +1,3 @@
+[submodule "third-party/rbpodo"]
+	path = third-party/rbpodo
+	url = https://github.com/RainbowRobotics/rbpodo.git

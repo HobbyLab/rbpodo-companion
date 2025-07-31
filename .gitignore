@@ -1,0 +1,10 @@
+.venv
+.vscode
+.DS_Store
+.idea
+.cmake
+
+*.deb
+__pycache__/
+CMakeFiles
+CMakeCache.txt
