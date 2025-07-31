@@ -10,7 +10,26 @@
 `rbpodo-companion` is a supplementary repository built on top of [rbpodo](https://github.com/RainbowRobotics/rbpodo), designed for real-world applications.
 It helps users quickly set up a ROS 2 MoveIt environment and interact with the robot via C++ and Python APIs provided by the rbpodo SDK.
 
----
+## Getting Started
+
+### Clone the Repository
+
+Make sure to include submodules when cloning:
+
+```bash
+git clone --recurse-submodules https://github.com/HobbyLab/rbpodo-companion.git
+cd rbpodo-companion
+```
+
+> [!WARNING]
+> Make sure to clone with `--recurse-submodules`.  
+> If you forget, the required `rbpodo` SDK will be missing and builds will fail.
+
+If you already cloned the repository without submodules, fix it with:
+
+```bash
+git submodule update --init --recursive
+```
 
 ## How to Install and Run
 
@@ -43,7 +62,7 @@ ros2 launch rbpodo_moveit_config moveit.launch.py \
   use_fake_hardware:=true
 ```
 
-※ `<ROBOT_MODEL_NAME>`: Robot model name (e.g., `rb3_730es_u`)
+※ `<ROBOT_MODEL_NAME>`: Robot model name (e.g., `rb3_730es_u`)  
 ※ `<YOUR_ROBOT_IP>`: Replace with the actual IP address of your robot
 
 ---
