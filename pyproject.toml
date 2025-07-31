@@ -12,6 +12,10 @@ numpy = "^2.0.1"
 pyside6 = "^6.9.1"
 rbpodo = { path = "third-party/rbpodo" }
 loguru = "^0.7.3"
+fastapi = "^0.116.1"
+orjson = "^3.11.1"
+uvicorn = "^0.35.0"
+websockets = "^15.0.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

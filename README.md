@@ -5,6 +5,12 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
 ![C++](https://img.shields.io/badge/C++-17-informational?logo=c%2B%2B)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+
+> [!WARNING]
+> This is **not an official Rainbow Robotics repository**.  
+> It serves as a community-supported companion project and may not work out-of-the-box in all environments.
+> Please test carefully and report issues if you find any.
+
 ## Overview
 
 `rbpodo-companion` is a supplementary repository built on top of [rbpodo](https://github.com/RainbowRobotics/rbpodo), designed for real-world applications.
@@ -84,6 +90,40 @@ sudo make install
 
 #### Python API Installation
 
+This project uses [Poetry](https://python-poetry.org/) for Python dependency and environment management.
+It offers better reproducibility and cleaner isolation than traditional `pip` + `venv`.
+
+**Install Poetry (if not already installed):**
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+**Recommended Poetry Setup:**
+
+```bash
+# Store virtual environment inside the project folder
+poetry config virtualenvs.in-project true
+
+# Add shell support plugin
+poetry self add poetry-plugin-shell
+
+# Ensure latest Poetry version
+poetry self update
+```
+
+**Install project dependencies:**
 ```bash
 poetry install
+```
+
+#### Running Python Scripts
+After entering the Poetry environment (`poetry shell`), you can run your Python files as usual:
+```bash
+python <your_python_file>.py
+```
+
+Alternatively, without activating the shell, you can use:
+```bash
+poetry run python <your_python_file>.py
 ```
