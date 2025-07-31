@@ -10,7 +10,8 @@ package-mode = false
 python = ">=3.10,<3.14"
 numpy = "^2.0.1"
 pyside6 = "^6.9.1"
-rbpodo = { path = "third-party/rbpodo", develop = true }
+rbpodo = { path = "third-party/rbpodo" }
+loguru = "^0.7.3"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
