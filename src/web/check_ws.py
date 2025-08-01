@@ -14,7 +14,7 @@ import asyncio
 import websockets
 
 async def receive_robot_state():
-    uri = "ws://localhost:8000/ws/data_stream"
+    uri = "ws://localhost:10101/ws/data_stream"
     async with websockets.connect(uri) as websocket:
         while True:
             message = await websocket.recv()

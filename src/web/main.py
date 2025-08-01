@@ -58,7 +58,7 @@ app.add_middleware(
 # Static file serving (frontend)
 BASE_DIR = Path(__file__).resolve().parent
 WEB_ROOT = BASE_DIR
-app.mount("/", StaticFiles(directory=WEB_ROOT, html=True), name="static")
+app.mount("/static", StaticFiles(directory=WEB_ROOT, html=True), name="static")
 
 # Serve index.html at root path
 @app.get("/")

@@ -101,15 +101,10 @@ License   : MIT
         data: {
           datasets: [
             {
-              label: 'Angle',
+              label: 'Angle(deg)',
               borderColor: 'red',
               data: [],
             },
-            {
-              label: 'Ref',
-              borderColor: 'blue',
-              data: [],
-            }
           ]
         },
         options: {
@@ -121,7 +116,6 @@ License   : MIT
               delay: 500,
               onRefresh: chart => {
                 chart.data.datasets[0].data.push({ x: Date.now(), y: jointData.angle[i] });
-                chart.data.datasets[1].data.push({ x: Date.now(), y: jointData.ref[i] });
               }
             }
           },
