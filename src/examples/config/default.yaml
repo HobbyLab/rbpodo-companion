@@ -1,0 +1,5 @@
+blend:
+  rate: 100
+
+logging:
+  level: INFO
