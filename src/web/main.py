@@ -28,8 +28,8 @@ import rbpodo as rb  # Custom robot SDK
 ROBOT_ADDRESS = os.getenv("ROBOT_ADDR", "10.0.2.7")
 
 # Robot control and data interface
-cobot = rb.asyncio.Cobot(ROBOT_ADDRESS)
-cobot_data = rb.asyncio.CobotData(ROBOT_ADDRESS)
+robot = rb.asyncio.Cobot(ROBOT_ADDRESS)
+robot_data = rb.asyncio.CobotData(ROBOT_ADDRESS)
 
 # WebSocket client set
 clients = set()
@@ -83,7 +83,7 @@ async def websocket_endpoint(websocket: WebSocket):
 async def data_broadcast_loop():
     while True:
         if clients:
-            data = await cobot_data.request_data()
+            data = await robot_data.request_data()
             payload = {
                 "jnt_ang": list(data.sdata.jnt_ang),
                 "jnt_ref": list(data.sdata.jnt_ref),
