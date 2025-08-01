@@ -16,12 +16,19 @@ import sys
 import os
 import json
 import datetime
+from pathlib import Path
 
 from loguru import logger
+import yaml
+
 import rbpodo as rb
 
+def load_config():
+    config_path = Path(__file__).resolve().parent / "config" / "default.yaml"
+    with open(config_path, "r") as f:
+        return yaml.safe_load(f)
 
-def _main(address, port):
+def _main(address, port, config):
     data_channel = rb.CobotData(address, port)
     collected = []
     logger.info("Interactive joint trace recording started.")
@@ -33,10 +40,12 @@ def _main(address, port):
                 break
 
             data = data_channel.request_data()
+
+            blend_rate = config["blend"]["rate"]
             entry = {
                 "jnt_ang": data.sdata.jnt_ang.astype(float).tolist(),
                 "tcp_pos": data.sdata.tcp_pos.astype(float).tolist(),
-                "blend_rate": 0.01,
+                "blend_rate": blend_rate,
             }
             collected.append(entry)
             logger.success(f"Recorded point #{len(collected)}")
@@ -83,4 +92,5 @@ if __name__ == "__main__":
     logger.remove()
     logger.add(sys.stdout, level=args.log_level)
 
-    _main(args.address, args.port)
+    config = load_config()
+    _main(args.address, args.port, config)

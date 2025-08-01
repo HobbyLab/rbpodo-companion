@@ -24,8 +24,8 @@ def _main(address, port, json_path):
     rc = rb.ResponseCollector()
 
     try:
-        logger.warning("Setting operation mode to Simulation")
-        robot.set_operation_mode(rc, rb.OperationMode.Simulation)
+        logger.warning("Setting operation mode to Real")
+        robot.set_operation_mode(rc, rb.OperationMode.Real)
         rc = rc.error().throw_if_not_empty()
 
         # -----------------------------
