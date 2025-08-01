@@ -24,9 +24,7 @@ import rbpodo as rb
 def _main(address, port):
     data_channel = rb.CobotData(address, port)
     collected = []
-
     logger.info("Interactive joint trace recording started.")
-
     try:
         while True:
             print("👉 Press [Enter] to record the current point. Type 'q' to quit and save.")
@@ -38,6 +36,7 @@ def _main(address, port):
             entry = {
                 "jnt_ang": data.sdata.jnt_ang.astype(float).tolist(),
                 "tcp_pos": data.sdata.tcp_pos.astype(float).tolist(),
+                "blend_rate": 0.01,
             }
             collected.append(entry)
             logger.success(f"Recorded point #{len(collected)}")
