@@ -1,0 +1,138 @@
+<!--
+Joint Trace Web UI
+
+This is a lightweight HTML frontend to visualize robot joint angles in real-time.
+It connects to the WebSocket server and displays charts using Chart.js.
+
+Author    : Hansol Kang
+Created   : 2025-08-01
+Copyright : (c) 2025 HobbyLab. All rights reserved.
+License   : MIT
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>📈 Joint Trace</title>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@2.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/date-fns"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .chart-box {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 250px !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>📈 Joint Trace</h1>
+  <p style="text-align: center; font-size: 0.9em; color: #666;">A Live Viewer for Robot Joint Angles</p>
+  <div class="container">
+    <!-- Joint 1~6 -->
+    <div class="chart-box"><h3>J0</h3><canvas id="chart-jnt-1"></canvas></div>
+    <div class="chart-box"><h3>J1</h3><canvas id="chart-jnt-2"></canvas></div>
+    <div class="chart-box"><h3>J2</h3><canvas id="chart-jnt-3"></canvas></div>
+    <div class="chart-box"><h3>J3</h3><canvas id="chart-jnt-4"></canvas></div>
+    <div class="chart-box"><h3>J4</h3><canvas id="chart-jnt-5"></canvas></div>
+    <div class="chart-box"><h3>J5</h3><canvas id="chart-jnt-6"></canvas></div>
+
+  </div>
+
+  <script>
+    const ws = new WebSocket("ws://" + location.host + "/ws/data_stream");
+
+    const jointData = {
+      angle: new Array(6).fill(0),
+      ref: new Array(6).fill(0),
+      tcp_pos: new Array(6).fill(0),
+      tcp_ref: new Array(6).fill(0)
+    };
+
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        jointData.angle = data.jnt_ang || jointData.angle;
+        jointData.ref = data.jnt_ref || jointData.ref;
+        jointData.tcp_pos = data.tcp_pos || jointData.tcp_pos;
+        jointData.tcp_ref = data.tcp_ref || jointData.tcp_ref;
+      } catch (e) {
+        console.error("WebSocket error:", e);
+      }
+    };
+
+    // J0~J5
+    for (let i = 0; i < 6; i++) {
+      const ctx = document.getElementById(`chart-jnt-${i+1}`).getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Angle(deg)',
+              borderColor: 'red',
+              data: [],
+            },
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            streaming: {
+              duration: 5000,
+              refresh: 200,
+              delay: 500,
+              onRefresh: chart => {
+                chart.data.datasets[0].data.push({ x: Date.now(), y: jointData.angle[i] });
+              }
+            }
+          },
+          scales: {
+            x: { type: 'realtime' },
+            y: { min: -180, max: 180 }
+          }
+        }
+      });
+    }
+
+
+  </script>
+<footer style="text-align: center; margin-top: 60px; padding: 20px 0; font-size: 0.9em; color: #666;">
+  <hr style="margin-bottom: 16px;">
+  <p><strong>rbpodo-companion</strong> — Joint Trace</p>
+  <p>© 2025 HobbyLab — Created by Hansol Kang</p>
+</footer>
+</body>
+</html>

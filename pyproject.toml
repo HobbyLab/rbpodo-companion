@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "rbpodo-companion"
+version = "0.1.0"
+description = ""
+authors = ["messy-snail <hskang.py@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+numpy = "^2.0.1"
+pyside6 = "^6.9.1"
+rbpodo = { path = "third-party/rbpodo" }
+loguru = "^0.7.3"
+fastapi = "^0.116.1"
+orjson = "^3.11.1"
+uvicorn = "^0.35.0"
+websockets = "^15.0.1"
+pyyaml = "^6.0.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$major.$minor.$patch$prerelease"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+change_type_map = { "BREAKING CHANGE" = "💥 Breaking Changes", "feat" = "✨ Features", "fix" = "🐛 Fixes"}
