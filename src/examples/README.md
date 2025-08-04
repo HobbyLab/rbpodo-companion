@@ -20,4 +20,13 @@ Press `q` or `Ctrl+C` to stop and export the collected data to a `.json` file.
 
 ```bash
 python record_joint_data.py
-````
+```
+
+### `replay_jb2.py`
+
+Replays a previously recorded joint trajectory using `move_jb2_*` commands.
+The entire motion is queued and executed smoothly via the JB2 interface.
+
+```bash
+python replay_jb2.py --json path/to/your_record.json
+```
